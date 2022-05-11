@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -57,6 +57,14 @@
        <attribute name="title">
         <string>Results</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QTableView" name="results_tableView"/>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="results_textEdit"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

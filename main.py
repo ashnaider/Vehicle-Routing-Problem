@@ -42,7 +42,7 @@ class MainWindow(base, form):
         self.connect_toolbar_actions()
         self.connect_canvas()
 
-        self.run_debug()
+        # self.run_debug()
 
     def connect_buttons(self):
         self.calculate_btn.clicked.connect(self.run_algo)
@@ -148,19 +148,46 @@ class MainWindow(base, form):
         res = ClarkeRight(x, y, orderings=orderings, capacity=capacity)
         routes, NKB, total_vol, total_milage, res, info_df = res
 
-        dist_m = calc_dist_matrix(x[1:], y[1:])
-        win_m = calc_win_matrix(x[1:], y[1:], dist_m=dist_m)
+        dist_m = calc_dist_matrix(x, y)
+        win_m = calc_win_matrix(x, y, dist_m=dist_m)
 
         self.set_iterations_table(info_df)
 
         self.set_dist_matrix_table(dist_m)
         self.set_win_dist_matrix_table(win_m)
+        self.set_result_matrix_table(res)
 
         self.plot_radial_routes(x[1:], y[1:], (x[0], y[0]))
         self.plot_circular_routes(x[1:], y[1:], (x[0], y[0]), routes=routes)
 
-        print("AFTER PLOT POINTS!")
+        
+        radial_str = "L = 2*("
+        for val in dist_m[0]:
+            radial_str += f"{val:.1f} + "
+        before = 2 * np.sum(dist_m[0])
+        radial_str += f") = {before:.1f}\n"
 
+        self.results_textEdit.setText('')
+
+        self.results_textEdit.append(radial_str)
+        self.results_textEdit.append(f"Routes len before: {before:.2f}\n")
+
+        self.results_textEdit.append(f"Routes: {routes}\n")
+        
+        NKB_str = "TOTAL WIN = "
+        for i in NKB:
+            NKB_str += f"{i:.2f} + "
+
+        NKB_str += f"= {sum(NKB):.2f}\n"
+
+        self.results_textEdit.append(f"Total win: {NKB_str}")
+        
+        self.results_textEdit.append(f"Routes len after: {total_milage:.2f}\n")
+        # self.results_textEdit.append(f"Routes len after 2: {before - sum(NKB):.2f}\n")
+
+        self.results_textEdit.append(f"Total volume: {total_vol:.2f}")
+
+        print("AFTER PLOT POINTS!")
 
 
     ############ TABLES DISPLAY ##############
@@ -187,6 +214,12 @@ class MainWindow(base, form):
         self.win_dist_matrix_tableView.setModel(win_dist_m_model)
         self.win_dist_matrix_tableView.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.win_dist_matrix_tableView.resizeColumnsToContents()
+
+    def set_result_matrix_table(self, res_m):
+        win_dist_m_model = DataFrameModel(res_m)
+        self.results_tableView.setModel(win_dist_m_model)
+        self.results_tableView.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.results_tableView.resizeColumnsToContents()
         
     def clear_tables(self):
         self.got_tables = False
