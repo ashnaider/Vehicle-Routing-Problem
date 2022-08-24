@@ -248,28 +248,28 @@ def ClarkeRight(x, y, orderings, capacity):
     return routes, NKB, total_vol, total_milage, res, info_df
 
 
-def find_i_j_route(i, j, routes):
+# def find_i_j_route(i, j, routes):
 
-    i_route, j_route = None, None
-    i_route_ind, j_route_ind = -1, -1
-    found_i_route, found_j_route = False, False
-    for route_ind, route in enumerate(routes):
-        # 2. check if i and j are not in the same route
-        if i in route and j in route:
-            break
-        # 3.1 check if i is start or end, not node of the route
-        if i in route and (i not in route[1:-1] or len(route) == 1) and not found_i_route:
-            i_route = route
-            i_route_ind = route_ind
-            found_i_route = True
+#     i_route, j_route = None, None
+#     i_route_ind, j_route_ind = -1, -1
+#     found_i_route, found_j_route = False, False
+#     for route_ind, route in enumerate(routes):
+#         # 2. check if i and j are not in the same route
+#         if i in route and j in route:
+#             break
+#         # 3.1 check if i is start or end, not node of the route
+#         if i in route and (i not in route[1:-1] or len(route) == 1) and not found_i_route:
+#             i_route = route
+#             i_route_ind = route_ind
+#             found_i_route = True
 
-        # 3.2 check if j is start or end, not node of the route
-        if j in route and (j not in route[1:-1] or len(route) == 1) and not found_j_route: 
-            j_route = route
-            j_route_ind = route_ind
-            found_j_route = True
+#         # 3.2 check if j is start or end, not node of the route
+#         if j in route and (j not in route[1:-1] or len(route) == 1) and not found_j_route: 
+#             j_route = route
+#             j_route_ind = route_ind
+#             found_j_route = True
 
-    return i_route, i_route_ind, j_route, j_route_ind
+#     return i_route, i_route_ind, j_route, j_route_ind
 
 
 def solve_task(test=False):

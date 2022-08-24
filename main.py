@@ -77,8 +77,10 @@ class MainWindow(base, form):
         ax.scatter([center[0]], [center[1]], marker='8', s=70)
 
         ax.annotate("center", (center[0]+0.3, center[1]), fontsize=14)
+
+        orderings = self.data[:, 2]
         for i in range(len(x)):
-            ax.annotate(str(i+1), (x[i]+0.5, y[i]), fontsize=14)
+            ax.annotate(f"{i+1} ({orderings[i]})", (x[i]+0.5, y[i]), fontsize=14)
 
     def plot_radial_routes(self, x, y, center):
         self.ax_radial = plt.subplot(self.subplot_rows, self.subplot_cols, 1)
